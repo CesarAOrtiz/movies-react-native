@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import MovieList from "./src/components/MovieList/MovieList";
+import MovieDetail from "./src/components/MovieDetail/MovieDetail";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default function App(props) {
+    return (
+        <View style={styles.container}>
+            {/* <View style={styles.content}>
+            <StatusBar style="dark-content" />
+        </View> */}
+            <MovieList />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        width: "100%",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: "linear-gradient(180deg,#4e73df 10%,#224abe)",
+        backgroundSize: "cover",
+    },
 });
+// const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } =
+//     Dimensions.get("window");
+// const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+//     Dimensions.get("screen");
