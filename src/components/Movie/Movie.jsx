@@ -43,9 +43,9 @@ export default function Movie(props) {
                 {(fill) => <Text style={styles.text}>{fill}</Text>}
             </AnimatedCircularProgress>
             <View style={styles.info}>
-                <TouchableOpacity>
-                    <Text style={[styles.text, styles.title]}>{title}</Text>
-                </TouchableOpacity>
+                <Text style={[styles.text, styles.title]}>
+                    <TouchableOpacity>{title}</TouchableOpacity>
+                </Text>
                 <Text style={styles.text}>{releaseDateString}</Text>
             </View>
         </View>

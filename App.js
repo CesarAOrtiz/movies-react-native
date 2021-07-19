@@ -20,8 +20,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: "linear-gradient(180deg,#4e73df 10%,#224abe)",
-        backgroundSize: "cover",
+        backgroundColor: "#4e73df",
     },
 });
 // const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } =
