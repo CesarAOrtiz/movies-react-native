@@ -11,7 +11,7 @@ export default function RatingStars({ defaultRating = 0 }) {
                 "Terrible",
                 "Bad",
                 "Meh",
-                "Hmm...",
+                "average",
                 "OK",
                 "Good",
                 "Very Good",
