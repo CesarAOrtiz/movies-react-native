@@ -16,9 +16,18 @@ function getGridSpace(screenWidth, objectWidth, objectMargin) {
 
 export default function MovieList(props) {
     const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const movieWidth = 250;
+    const movieHeigth = 375;
+    const movieMargin = 10;
 
     const [gridTemplateColumns, setGridTemplateColumns] = useState(
-        getGridSpace(Dimensions.get("window").width, 260, 20)
+        getGridSpace(
+            Dimensions.get("window").width,
+            movieWidth,
+            movieMargin * 2
+        )
     );
 
     useEffect(() => {
@@ -29,24 +38,37 @@ export default function MovieList(props) {
             } catch (error) {
                 setMovies([]);
             }
+            setLoading(false);
         }
         loadMovies();
     }, []);
 
     useEffect(() => {
         const setGrids = ({ window }) =>
-            setGridTemplateColumns(getGridSpace(window.width, 260, 20));
+            setGridTemplateColumns(getGridSpace(window.width, movieWidth, 20));
         Dimensions.addEventListener("change", setGrids);
-        return () => removeEventListener("change", setGrids);
+        return () => Dimensions.removeEventListener("change", setGrids);
     }, []);
 
     const renderItem = ({ item }) => (
-        <Movie movie={item} navigation={props.navigation} />
+        <Movie
+            movie={item}
+            imgWidth={movieWidth}
+            imgHeight={movieHeigth}
+            cardMargin={movieMargin}
+            navigation={props.navigation}
+        />
     );
 
     return (
         <View style={styles.container}>
-            {movies ? (
+            {loading ? (
+                <ActivityIndicator
+                    size={40}
+                    color="white"
+                    style={{ height: "calc(100vh - 64px)" }}
+                />
+            ) : (
                 <FlatList
                     contentContainerStyle={{
                         display: "grid",
@@ -56,12 +78,11 @@ export default function MovieList(props) {
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id.toString()}
                 />
-            ) : (
-                <ActivityIndicator size={40} color="white" />
             )}
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         width: "100%",

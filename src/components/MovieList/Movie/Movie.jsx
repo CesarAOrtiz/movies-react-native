@@ -3,14 +3,28 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import CircularProgressBar from "../../CircularProgressBar/CircularProgressBar";
 
 export default function Movie(props) {
-    const { movie, imgWidth = 260, imgHeight = 390, navigation } = props;
+    const {
+        movie,
+        imgWidth = 260,
+        imgHeight = 390,
+        cardMargin = 10,
+        navigation,
+        backgroundColor = "#01192e",
+        color = "white",
+        showInfo = true,
+    } = props;
     const { title, poster, releaseDate, voteAverage, id } = movie;
 
     const releaseDateString = new Date(releaseDate).toDateString();
     const onPress = (e) => navigation.navigate("Details", { id, title });
 
     return (
-        <View style={[styles.card, { width: imgWidth }]}>
+        <View
+            style={[
+                styles.card,
+                { width: imgWidth, margin: cardMargin, backgroundColor },
+            ]}
+        >
             <TouchableOpacity onPress={onPress}>
                 <Image
                     source={{ uri: poster }}
@@ -22,11 +36,18 @@ export default function Movie(props) {
                 right={10}
                 progress={voteAverage}
             />
+
             <View style={styles.info}>
                 <TouchableOpacity onPress={onPress}>
-                    <Text style={[styles.text, styles.title]}>{title}</Text>
+                    <Text style={[styles.text, styles.title, { color }]}>
+                        {title}
+                    </Text>
                 </TouchableOpacity>
-                <Text style={styles.text}>{releaseDateString}</Text>
+                {showInfo && (
+                    <Text style={[styles.text, { color }]}>
+                        {releaseDateString}
+                    </Text>
+                )}
             </View>
         </View>
     );
@@ -34,13 +55,12 @@ export default function Movie(props) {
 
 const styles = StyleSheet.create({
     card: {
-        margin: 10,
         backgroundColor: "#01192e",
         borderRadius: 15,
         shadowColor: "#000",
         shadowOffset: {
-            width: 1,
-            height: 10,
+            width: 5,
+            height: 5,
         },
         shadowOpacity: 0.25,
         shadowRadius: 7.5,

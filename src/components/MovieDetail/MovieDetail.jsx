@@ -4,12 +4,14 @@ import { ScrollView } from "react-native-gesture-handler";
 import TMDB from "../../services/TMDB";
 import CastList from "../../components/CastList/CastList";
 import DetailInfo from "./DetailInfo/DetailInfo";
+import SimilarList from "../MovieList/SimilarsList";
 
 export default function MovieDetail({ route, navigation }) {
     const { id } = route.params;
     const [loading, setLoading] = useState(true);
     const [movie, setMovie] = useState({});
     const [cast, setCast] = useState([]);
+    const [similars, setSimilars] = useState([]);
 
     useEffect(() => {
         async function fetchMovie() {
@@ -37,13 +39,25 @@ export default function MovieDetail({ route, navigation }) {
         fetchCast();
     }, [id]);
 
+    useEffect(() => {
+        async function fetchSimilars() {
+            try {
+                const similars = await new TMDB().getMovieSimilars(id);
+                setSimilars(similars);
+            } catch (error) {
+                setSimilars([]);
+            }
+        }
+        fetchSimilars();
+    }, [id]);
+
     return (
         <ScrollView style={styles.container}>
             {loading ? (
                 <ActivityIndicator
                     size={40}
                     color="#4e73df"
-                    style={{ height: "calc(100vh)" }}
+                    style={{ height: "calc(100vh - 64px)" }}
                 />
             ) : (
                 <>
@@ -58,6 +72,11 @@ export default function MovieDetail({ route, navigation }) {
                     <View style={{ margin: 20 }}>
                         <DetailInfo movie={movie} />
                         <CastList cast={cast} />
+                        <SimilarList
+                            movies={similars}
+                            navigation={navigation}
+                            title={"Similars"}
+                        />
                     </View>
                 </>
             )}

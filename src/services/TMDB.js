@@ -1,5 +1,5 @@
 export default class TMDB {
-    imageURL = "https://image.tmdb.org/t/p/original";
+    imageURL = "https://image.tmdb.org/t/p/w500";
     imageCastURL = "https://image.tmdb.org/t/p/w185";
     baseURL = "https://api.themoviedb.org/3/";
     apiKey = "6f1a2f5fc8e0c2ba7e14d7f2bf40a1da";
@@ -55,14 +55,18 @@ export default class TMDB {
         }
     }
 
-    getActor(json) {
-        const result = {
-            name: json.name,
-            character: json.character,
-            profilePath: this.imageURL + json.profile_path,
-            id: json.id,
-        };
-        return result;
+    async getMovieSimilars(id, page = 1) {
+        const uri = `${this.baseURL}movie/${id}/similar?api_key=${this.apiKey}&language=en-US&page=${page}`;
+        try {
+            const response = await fetch(uri);
+            const json = await response.json();
+            const results = json.results.map((movie) =>
+                this.getMovieData(movie)
+            );
+            return results;
+        } catch (error) {
+            return error;
+        }
     }
 
     getMovieData(json) {
@@ -86,6 +90,16 @@ export default class TMDB {
         // result.similarMovies = json.similar_movies;
         // result.reviews = json.reviews;
         // result.videos = json.videos;
+        return result;
+    }
+
+    getActor(json) {
+        const result = {
+            name: json.name,
+            character: json.character,
+            profilePath: this.imageURL + json.profile_path,
+            id: json.id,
+        };
         return result;
     }
 }
