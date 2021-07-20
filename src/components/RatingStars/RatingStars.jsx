@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AirbnbRating } from "react-native-ratings";
 
 function ratingCompleted(rating) {}

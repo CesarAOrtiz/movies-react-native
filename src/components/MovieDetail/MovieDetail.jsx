@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Image, View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import TMDB from "../../services/TMDB";
-import CastList from "../../components/CastList/CastList";
+import DetailPoster from "./DetailPoster/DetailPoster";
 import DetailInfo from "./DetailInfo/DetailInfo";
-import SimilarList from "../MovieList/SimilarsList";
-import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
+import CastSection from "../../components/CastSection/CastSection";
+import SimilarSection from "../../components/SimilarSection/SimilarSection";
 
 export default function MovieDetail({ route, navigation }) {
     const { id } = route.params;
     const [loading, setLoading] = useState(true);
     const [movie, setMovie] = useState({});
-    const [cast, setCast] = useState([]);
-    const [similars, setSimilars] = useState([]);
 
     useEffect(() => {
         async function fetchMovie() {
@@ -28,32 +26,8 @@ export default function MovieDetail({ route, navigation }) {
         fetchMovie();
     }, [id]);
 
-    useEffect(() => {
-        async function fetchCast() {
-            try {
-                const cast = await new TMDB().getMovieCast(id);
-                setCast(cast);
-            } catch (error) {
-                setCast([]);
-            }
-        }
-        fetchCast();
-    }, [id]);
-
-    useEffect(() => {
-        async function fetchSimilars() {
-            try {
-                const similars = await new TMDB().getMovieSimilars(id);
-                setSimilars(similars);
-            } catch (error) {
-                setSimilars([]);
-            }
-        }
-        fetchSimilars();
-    }, [id]);
-
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView>
             {loading ? (
                 <ActivityIndicator
                     size={40}
@@ -62,49 +36,14 @@ export default function MovieDetail({ route, navigation }) {
                 />
             ) : (
                 <>
-                    <View style={styles.imageContainer}>
-                        <View style={styles.imageBorder}>
-                            <Image
-                                source={{ uri: movie.backdrop }}
-                                style={styles.posterImage}
-                            />
-                            <CircularProgressBar
-                                top={"calc(100% - 50px)"}
-                                right={"calc(100% - 60px)"}
-                                size={40}
-                                width={4}
-                                progress={movie.voteAverage}
-                            />
-                        </View>
-                    </View>
+                    <DetailPoster movie={movie} />
                     <View style={{ margin: 20 }}>
                         <DetailInfo movie={movie} />
-                        <CastList cast={cast} />
-                        <SimilarList
-                            movies={similars}
-                            navigation={navigation}
-                            title={"Similars"}
-                        />
+                        <CastSection id={id} />
+                        <SimilarSection id={id} navigation={navigation} />
                     </View>
                 </>
             )}
         </ScrollView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "white",
-    },
-    imageContainer: {
-        width: "100%",
-        height: "50vh",
-    },
-    imageBorder: {
-        flex: 1,
-        overflow: "hidden",
-    },
-    posterImage: {
-        flex: 1,
-    },
-});

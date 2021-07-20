@@ -1,10 +1,10 @@
 import React from "react";
-import { ActivityIndicator, FlatList } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import Cast from "./Cast/Cast";
 
 export default function CastList({ cast }) {
     return (
-        <>
+        <View>
             {cast ? (
                 <FlatList
                     data={cast}
@@ -21,6 +21,6 @@ export default function CastList({ cast }) {
                     style={{ marginTop: 20 }}
                 />
             )}
-        </>
+        </View>
     );
 }

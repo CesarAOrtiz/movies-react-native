@@ -1,8 +1,8 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import Movie from "./Movie/Movie";
+import Movie from "../MovieList/Movie/Movie";
 
-export default function HorizontalSlider({ title, movies, navigation }) {
+export default function SimilarList({ title, movies, navigation }) {
     return (
         <View style={{ height: 355 }}>
             {title && (
