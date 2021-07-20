@@ -1,8 +1,9 @@
 export default class TMDB {
     imageURL = "https://image.tmdb.org/t/p/original";
+    imageCastURL = "https://image.tmdb.org/t/p/w185";
     baseURL = "https://api.themoviedb.org/3/";
     apiKey = "6f1a2f5fc8e0c2ba7e14d7f2bf40a1da";
-    constructor() {}
+
     sortByTitle(a, b) {
         if (a.title > b.title) {
             return 1;
@@ -11,33 +12,64 @@ export default class TMDB {
         }
         return 0;
     }
+
     async getNowPlayingMovies(page = 1) {
         const uri = `${this.baseURL}movie/now_playing?api_key=${this.apiKey}&language=en-US&page=${page}`;
         try {
             const response = await fetch(uri);
             const json = await response.json();
-            const results = json.results.map((movie) => this.getJSON(movie));
+            const results = json.results.map((movie) =>
+                this.getMovieData(movie)
+            );
             results.sort(this.sortByTitle);
             return results;
         } catch (error) {
             return error;
         }
     }
-    async getMovieDetail(id) {
+
+    async getMovie(id) {
         const uri = `${this.baseURL}movie/${id}?api_key=${this.apiKey}&language=en-US`;
         try {
             const response = await fetch(uri);
             const json = await response.json();
-            return this.getJSON(json);
+            return this.getMovieData(json);
         } catch (error) {
             return error;
         }
     }
-    getJSON(json) {
+
+    async getMovieCast(id) {
+        const uri = `${this.baseURL}movie/${id}/credits?api_key=${this.apiKey}&language=en-US`;
+        try {
+            const response = await fetch(uri);
+            const json = await response.json();
+            const characters = json.cast.filter(
+                (actor) =>
+                    actor.character !== null && actor.profile_path !== null
+            );
+            const results = characters.map((actor) => this.getActor(actor));
+            return results;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    getActor(json) {
+        const result = {
+            name: json.name,
+            character: json.character,
+            profilePath: this.imageURL + json.profile_path,
+            id: json.id,
+        };
+        return result;
+    }
+
+    getMovieData(json) {
         const result = {};
         result.id = json.id;
         result.title = json.title;
-        // result.overview = json.overview;
+        result.overview = json.overview;
         result.poster = this.imageURL + json.poster_path;
         result.backdrop = this.imageURL + json.backdrop_path;
         result.releaseDate = json.release_date;
@@ -45,7 +77,7 @@ export default class TMDB {
         // result.popularity = json.popularity;
         result.voteAverage = json.vote_average;
         // result.voteCount = json.vote_count;
-        // result.genres = json.genres;
+        result.genres = json.genres;
         // result.productionCompany = json.production_companies;
         // result.cast = json.cast;
         // result.crew = json.crew;
