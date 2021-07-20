@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import CircularProgressBar from "../../CircularProgressBar/CircularProgressBar";
+import RatingStars from "../../RatingStars/RatingStars";
 
 export default function DetailInfo({ movie }) {
     return (
@@ -8,11 +8,7 @@ export default function DetailInfo({ movie }) {
             <Text style={[styles.title, { color: "#4e73df" }]}>
                 {movie.title}
             </Text>
-            <CircularProgressBar
-                top={-55}
-                right={"calc(100% - 30px)"}
-                progress={movie.voteAverage}
-            />
+            <RatingStars />
             <Text style={styles.title}>Overview</Text>
             <Text style={styles.subtitle}>{movie.overview}</Text>
             <Text style={styles.title}>Release date</Text>
@@ -36,5 +32,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
     },
-    subtitle: { fontSizes: 16 },
+    subtitle: { fontSize: 16 },
 });

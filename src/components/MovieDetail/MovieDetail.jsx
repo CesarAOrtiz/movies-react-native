@@ -5,6 +5,7 @@ import TMDB from "../../services/TMDB";
 import CastList from "../../components/CastList/CastList";
 import DetailInfo from "./DetailInfo/DetailInfo";
 import SimilarList from "../MovieList/SimilarsList";
+import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
 
 export default function MovieDetail({ route, navigation }) {
     const { id } = route.params;
@@ -66,6 +67,13 @@ export default function MovieDetail({ route, navigation }) {
                             <Image
                                 source={{ uri: movie.backdrop }}
                                 style={styles.posterImage}
+                            />
+                            <CircularProgressBar
+                                top={"calc(100% - 50px)"}
+                                right={"calc(100% - 60px)"}
+                                size={40}
+                                width={4}
+                                progress={movie.voteAverage}
                             />
                         </View>
                     </View>
