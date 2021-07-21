@@ -15,6 +15,7 @@ export default function SimilarList({ title, movies, navigation }) {
             showInfo={false}
         />
     );
+
     return (
         <View style={{ height: 355 }}>
             {title && (
@@ -23,7 +24,7 @@ export default function SimilarList({ title, movies, navigation }) {
                 </Text>
             )}
 
-            {movies.length > 0 ? (
+            {movies?.length > 0 ? (
                 <FlatList
                     data={movies}
                     renderItem={renderItem}

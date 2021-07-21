@@ -1,6 +1,5 @@
 import React from "react";
 import render from "react-test-renderer";
-
 import Cast from "./Cast";
 
 describe("<Cast />", () => {

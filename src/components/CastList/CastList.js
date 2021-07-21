@@ -5,7 +5,7 @@ import Cast from "./Cast/Cast";
 export default function CastList({ cast }) {
     return (
         <View>
-            {cast.length > 0 ? (
+            {cast?.length > 0 ? (
                 <FlatList
                     data={cast}
                     keyExtractor={(item) => item.id.toString()}

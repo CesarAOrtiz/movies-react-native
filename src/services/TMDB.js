@@ -1,8 +1,9 @@
+import { APY_KEY } from "@env";
 export default class TMDB {
     imageURL = "https://image.tmdb.org/t/p/w500";
     imageCastURL = "https://image.tmdb.org/t/p/w185";
     baseURL = "https://api.themoviedb.org/3/";
-    apiKey = "6f1a2f5fc8e0c2ba7e14d7f2bf40a1da";
+    apiKey = APY_KEY;
 
     sortByTitle(a, b) {
         if (a.title > b.title) {
@@ -70,36 +71,25 @@ export default class TMDB {
     }
 
     getMovieData(json) {
-        const result = {};
-        result.id = json.id;
-        result.title = json.title;
-        result.overview = json.overview;
-        result.poster = this.imageURL + json.poster_path;
-        result.backdrop = this.imageURL + json.backdrop_path;
-        result.releaseDate = json.release_date;
-        // result.runtime = json.runtime;
-        // result.popularity = json.popularity;
-        result.voteAverage = json.vote_average;
-        // result.voteCount = json.vote_count;
-        result.genres = json.genres;
-        // result.productionCompany = json.production_companies;
-        // result.cast = json.cast;
-        // result.crew = json.crew;
-        // result.releases = json.releases;
-        // result.trailers = json.trailers;
-        // result.similarMovies = json.similar_movies;
-        // result.reviews = json.reviews;
-        // result.videos = json.videos;
-        return result;
+        const movie = {};
+        movie.id = json.id;
+        movie.title = json.title;
+        movie.overview = json.overview;
+        movie.poster = this.imageURL + json.poster_path;
+        movie.backdrop = this.imageURL + json.backdrop_path;
+        movie.releaseDate = json.release_date;
+        movie.voteAverage = json.vote_average;
+        movie.genres = json.genres;
+        return movie;
     }
 
     getActor(json) {
-        const result = {
+        const actor = {
             name: json.name,
             character: json.character,
             profilePath: this.imageURL + json.profile_path,
             id: json.id,
         };
-        return result;
+        return actor;
     }
 }

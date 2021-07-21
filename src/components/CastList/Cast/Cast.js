@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
 import TMDB from "../../../services/TMDB";
 
 export default function Cast({ actor }) {
-    const uri = `${new TMDB().imageCastURL}${actor.profilePath}`;
+    if (!actor) return null;
 
     return (
         <View style={styles.container}>
-            {actor.profilePath && (
-                <Image
-                    source={{ uri }}
-                    style={{ width: 50, height: 50, borderRadius: 10 }}
-                />
-            )}
+            <Image
+                source={{ uri: actor.profilePath }}
+                style={{ width: 50, height: 50, borderRadius: 10 }}
+            />
             <View style={styles.actorInfo}>
                 <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                     {actor.name}

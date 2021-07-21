@@ -7,7 +7,12 @@ export default function DetailPoster({ movie }) {
     return (
         <View style={styles.imageContainer}>
             <View style={styles.imageBorder}>
-                <Image source={{ uri: backdrop }} style={styles.posterImage} />
+                {backdrop?.length > 0 && (
+                    <Image
+                        source={{ uri: backdrop }}
+                        style={styles.posterImage}
+                    />
+                )}
                 <CircularProgressBar
                     top={"calc(100% - 50px)"}
                     right={"calc(100% - 60px)"}
