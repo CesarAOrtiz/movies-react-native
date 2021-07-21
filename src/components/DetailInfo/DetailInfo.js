@@ -1,10 +1,8 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import RatingStars from "../RatingStars/RatingStars";
-import { useRated } from "../../contexts/RatedContext";
 
-export default function DetailInfo({ movie }) {
-    const { rated, setRated } = useRated();
+export default function DetailInfo({ movie, rated, setRated }) {
     const releaseDate = new Date(movie.releaseDate).toDateString();
 
     return (

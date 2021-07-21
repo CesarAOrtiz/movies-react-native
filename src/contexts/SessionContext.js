@@ -18,14 +18,13 @@ export function SessionProvider({ children }) {
                 if (id !== null) {
                     setSession({ id });
                 } else {
-                    console.log("Llamando");
                     const { guest_session_id } =
                         await new TMBD().getGuestSession();
-                    setSession({ id: guest_session_id });
                     await AsyncStorage.setItem(
                         "@guest_session_id",
                         guest_session_id
                     );
+                    setSession({ id: guest_session_id });
                 }
             } catch (error) {
                 setSession(null);
