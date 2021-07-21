@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import TMDB from "../../services/TMDB";
-import DetailPoster from "./DetailPoster/DetailPoster";
-import DetailInfo from "./DetailInfo/DetailInfo";
+import DetailPoster from "../../components/DetailPoster/DetailPoster";
+import DetailInfo from "../../components/DetailInfo/DetailInfo";
 import CastSection from "../../components/CastSection/CastSection";
-import SimilarSection from "../../components/SimilarSection/SimilarSection";
+import SimilarsSection from "../../components/SimilarsSection/SimilarsSection";
 
 export default function MovieDetail({ route, navigation }) {
     const { id } = route.params;
@@ -40,7 +40,7 @@ export default function MovieDetail({ route, navigation }) {
                     <View style={{ margin: 20 }}>
                         <DetailInfo movie={movie} />
                         <CastSection id={id} />
-                        <SimilarSection id={id} navigation={navigation} />
+                        <SimilarsSection id={id} navigation={navigation} />
                     </View>
                 </>
             )}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import RatingStars from "../../RatingStars/RatingStars";
+import RatingStars from "../RatingStars/RatingStars";
 
 export default function DetailInfo({ movie }) {
     const releaseDate = new Date(movie.releaseDate).toDateString();

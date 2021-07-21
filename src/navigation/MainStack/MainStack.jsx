@@ -2,8 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-import MovieList from "../MovieList/MovieList";
-import MovieDetail from "../MovieDetail/MovieDetail";
+import MovieList from "../../screens/MovieList/MovieList";
+import MovieDetail from "../../screens/MovieDetail/MovieDetail";
 
 const Stack = createStackNavigator();
 
@@ -17,17 +17,17 @@ const options = {
     },
 };
 
-export const Navigation = () => {
+export default function MainStack() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Details" screenOptions={options}>
+            <Stack.Navigator initialRouteName="Home" screenOptions={options}>
                 <Stack.Screen
                     name="Home"
                     component={MovieList}
                     options={{
                         title: "Movies Inc",
                         headerTitleStyle: {
-                            fontSize: 24,
+                            fontSize: 28,
                         },
                     }}
                 />
@@ -45,9 +45,4 @@ export const Navigation = () => {
             </Stack.Navigator>
         </NavigationContainer>
     );
-};
-
-// initialParams={{
-//     id: 635302,
-//     title: "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
-// }}
+}

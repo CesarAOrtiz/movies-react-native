@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigation } from "./src/components/Navigation/Navigation";
-
+import MainStack from "./src/navigation/MainStack/MainStack";
 export default function App(props) {
-    return <Navigation />;
+    return <MainStack />;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import CircularProgressBar from "../../CircularProgressBar/CircularProgressBar";
+import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
 
 export default function Movie(props) {
     const {
@@ -36,7 +36,6 @@ export default function Movie(props) {
                 right={10}
                 progress={voteAverage}
             />
-
             <View style={styles.info}>
                 <TouchableOpacity onPress={onPress}>
                     <Text style={[styles.text, styles.title, { color }]}>

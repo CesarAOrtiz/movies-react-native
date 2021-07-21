@@ -6,22 +6,18 @@ import {
     FlatList,
     ActivityIndicator,
 } from "react-native";
-import Movie from "./Movie/Movie";
+import Movie from "../../components/Movie/Movie";
 import TMDB from "../../services/TMDB";
 
 function getGridSpace(screenWidth, objectWidth, objectMargin) {
-    const space = parseInt(screenWidth / parseInt(objectWidth + objectMargin));
+    if (objectWidth + objectMargin <= 0) return `repeat(1, 1fr)`;
+    const space = parseInt(screenWidth / (objectWidth + objectMargin));
     return `repeat(${space}, 1fr)`;
 }
 
-export default function MovieList(props) {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const movieWidth = 250;
-    const movieHeigth = 375;
-    const movieMargin = 10;
-
+export default function MovieList({ navigation, list = [], ...props }) {
+    const { movieWidth = 250, movieHeigth = 375, movieMargin = 10 } = props;
+    const [movies, setMovies] = useState(list);
     const [gridTemplateColumns, setGridTemplateColumns] = useState(
         getGridSpace(
             Dimensions.get("window").width,
@@ -38,14 +34,14 @@ export default function MovieList(props) {
             } catch (error) {
                 setMovies([]);
             }
-            setLoading(false);
         }
         loadMovies();
     }, []);
 
     useEffect(() => {
-        const setGrids = ({ window }) =>
+        const setGrids = ({ window }) => {
             setGridTemplateColumns(getGridSpace(window.width, movieWidth, 20));
+        };
         Dimensions.addEventListener("change", setGrids);
         return () => Dimensions.removeEventListener("change", setGrids);
     }, []);
@@ -56,19 +52,13 @@ export default function MovieList(props) {
             imgWidth={movieWidth}
             imgHeight={movieHeigth}
             cardMargin={movieMargin}
-            navigation={props.navigation}
+            navigation={navigation}
         />
     );
 
     return (
         <View style={styles.container}>
-            {loading ? (
-                <ActivityIndicator
-                    size={40}
-                    color="white"
-                    style={{ height: "calc(100vh - 64px)" }}
-                />
-            ) : (
+            {movies.length > 0 ? (
                 <FlatList
                     contentContainerStyle={{
                         display: "grid",
@@ -77,6 +67,12 @@ export default function MovieList(props) {
                     data={movies}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id.toString()}
+                />
+            ) : (
+                <ActivityIndicator
+                    size={40}
+                    color="white"
+                    style={{ height: "calc(100vh - 64px)" }}
                 />
             )}
         </View>

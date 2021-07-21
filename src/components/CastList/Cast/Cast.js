@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 10,
         height: 50,
+        marginLeft: 20,
+        paddingRight: 15,
+        elevation: 9,
         shadowColor: "#000",
         shadowOffset: {
             width: 5,
@@ -38,9 +41,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 7.5,
-        elevation: 9,
-        marginLeft: 20,
-        paddingRight: 15,
     },
     actorInfo: {
         marginLeft: 10,

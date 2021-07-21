@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import TMDB from "../../services/TMDB";
-import CastList from "../../components/CastList/CastList";
+import CastList from "../CastList/CastList";
 
-export default function CastSection({ id }) {
-    const [cast, setCast] = useState([]);
+export default function CastSection({ id, providedCast = [] }) {
+    const [cast, setCast] = useState(providedCast);
 
     useEffect(() => {
         async function fetchCast() {
@@ -15,16 +15,17 @@ export default function CastSection({ id }) {
                 setCast([]);
             }
         }
-        fetchCast();
+        if (providedCast.length <= 0) fetchCast();
     }, []);
 
     return (
         <View>
-            <Text style={styles.title}>Actores</Text>
+            <Text style={styles.title}>Actors</Text>
             <CastList cast={cast} />
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     title: {
         fontSize: 20,
