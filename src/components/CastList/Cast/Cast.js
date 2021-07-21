@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
-import TMDB from "../../../services/TMDB";
 
 export default function Cast({ actor }) {
     if (!actor) return null;

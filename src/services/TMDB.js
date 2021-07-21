@@ -92,4 +92,45 @@ export default class TMDB {
         }
         return 0;
     }
+
+    async getGuestSession() {
+        const uri = `${this.baseURL}authentication/guest_session/new?api_key=${this.apiKey}`;
+        try {
+            const response = await fetch(uri);
+            const json = await response.json();
+            return json;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async rate(sessionId, movieId, value) {
+        const uri = `${this.baseURL}movie/${movieId}/rating?api_key=${this.apiKey}&guest_session_id=${sessionId}`;
+        try {
+            const response = await fetch(uri, {
+                method: "POST",
+                body: JSON.stringify({ value: value }),
+                headers: { "Content-Type": "application/json" },
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    async getRatedMovies(sessionId, page = 1) {
+        const uri = `${this.baseURL}guest_session/${sessionId}/rated/movies?api_key=${this.apiKey}&language=en-US&sort_by=created_at.asc&page=${page}`;
+        try {
+            const response = await fetch(uri);
+            const json = await response.json();
+            const results = {};
+            json.results.forEach((movie) => {
+                results[movie.id] = movie.rating;
+            });
+            return results;
+        } catch (error) {
+            return error;
+        }
+    }
 }

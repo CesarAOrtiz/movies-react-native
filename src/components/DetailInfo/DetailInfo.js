@@ -1,15 +1,22 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import RatingStars from "../RatingStars/RatingStars";
+import { useRated } from "../../contexts/RatedContext";
 
 export default function DetailInfo({ movie }) {
+    const { rated, setRated } = useRated();
     const releaseDate = new Date(movie.releaseDate).toDateString();
+
     return (
         <View>
             <Text style={[styles.title, { color: "#4e73df" }]}>
                 {movie.title}
             </Text>
-            <RatingStars />
+            <RatingStars
+                movieId={movie.id}
+                defaultRating={rated[movie.id] || 0}
+                onRate={setRated}
+            />
             <Text style={styles.title}>Overview</Text>
             <Text style={styles.subtitle}>{movie.overview}</Text>
             <Text style={styles.title}>Release date</Text>

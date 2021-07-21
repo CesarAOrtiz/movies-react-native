@@ -1,9 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AirbnbRating } from "react-native-ratings";
+import { useSession } from "../../contexts/SessionContext";
+import TMDB from "../../services/TMDB";
 
-function ratingCompleted(rating) {}
+export default function RatingStars({
+    sessionId,
+    movieId,
+    onRate,
+    defaultRating = 0,
+}) {
+    const { id } = sessionId || useSession();
 
-export default function RatingStars({ defaultRating = 0 }) {
+    async function ratingCompleted(rating) {
+        const { success } = await new TMDB().rate(id, movieId, rating);
+
+        if (success && onRate) {
+            onRate((prev) => {
+                if (prev) {
+                    prev[movieId] = rating;
+                }
+                return prev;
+            });
+        }
+    }
+
     const reviews = [
         "Terrible",
         "Bad",
@@ -16,6 +36,7 @@ export default function RatingStars({ defaultRating = 0 }) {
         "Amazing",
         "Unbelievable",
     ];
+
     return (
         <AirbnbRating
             count={10}
