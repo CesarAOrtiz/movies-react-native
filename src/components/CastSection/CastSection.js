@@ -9,7 +9,7 @@ export default function CastSection({ id, providedCast = [] }) {
     useEffect(() => {
         async function fetchCast() {
             try {
-                const cast = await new TMDB().getMovieCast(id);
+                const cast = await new TMDB().getCast(id);
                 setCast(cast);
             } catch (error) {
                 setCast([]);
@@ -20,7 +20,7 @@ export default function CastSection({ id, providedCast = [] }) {
 
     return (
         <View>
-            <Text style={styles.title}>Actors</Text>
+            <Text style={styles.title}>Cast</Text>
             <CastList cast={cast} />
         </View>
     );

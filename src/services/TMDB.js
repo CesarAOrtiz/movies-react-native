@@ -1,18 +1,9 @@
 import { APY_KEY } from "@env";
 export default class TMDB {
-    imageURL = "https://image.tmdb.org/t/p/w500";
+    imageURL = "https://image.tmdb.org/t/p/original";
     imageCastURL = "https://image.tmdb.org/t/p/w185";
     baseURL = "https://api.themoviedb.org/3/";
     apiKey = APY_KEY;
-
-    sortByTitle(a, b) {
-        if (a.title > b.title) {
-            return 1;
-        } else if (a.title < b.title) {
-            return -1;
-        }
-        return 0;
-    }
 
     async getNowPlayingMovies(page = 1) {
         const uri = `${this.baseURL}movie/now_playing?api_key=${this.apiKey}&language=en-US&page=${page}`;
@@ -40,7 +31,7 @@ export default class TMDB {
         }
     }
 
-    async getMovieCast(id) {
+    async getCast(id) {
         const uri = `${this.baseURL}movie/${id}/credits?api_key=${this.apiKey}&language=en-US`;
         try {
             const response = await fetch(uri);
@@ -56,7 +47,7 @@ export default class TMDB {
         }
     }
 
-    async getMovieSimilars(id, page = 1) {
+    async getSimilars(id, page = 1) {
         const uri = `${this.baseURL}movie/${id}/similar?api_key=${this.apiKey}&language=en-US&page=${page}`;
         try {
             const response = await fetch(uri);
@@ -91,5 +82,14 @@ export default class TMDB {
             id: json.id,
         };
         return actor;
+    }
+
+    sortByTitle(a, b) {
+        if (a.title > b.title) {
+            return 1;
+        } else if (a.title < b.title) {
+            return -1;
+        }
+        return 0;
     }
 }

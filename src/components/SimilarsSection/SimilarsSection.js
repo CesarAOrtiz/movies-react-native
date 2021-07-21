@@ -13,7 +13,7 @@ export default function SimilarsSection({
     useEffect(() => {
         async function fetchSimilars() {
             try {
-                const similars = await new TMDB().getMovieSimilars(id);
+                const similars = await new TMDB().getSimilars(id);
                 setSimilars(similars);
             } catch (error) {
                 setSimilars([]);
