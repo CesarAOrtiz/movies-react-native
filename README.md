@@ -2,12 +2,14 @@
 
 ## Instrucciones de instalación
 
-### Instalar dependencias 
+### Instalación de dependecias 
 npm install 
 
-### Ejecutar la aplicación
+### Ejecución la aplicación
 android: expo start --android
+
 ios: expo start --ios
+
 web: expo start --web
 
 ### Capturas de pantalla de la aplicación creada con React Native
