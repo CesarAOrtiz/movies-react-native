@@ -5,7 +5,7 @@
 ### Instalación de dependecias 
 npm install 
 
-### Ejecución la aplicación
+### Ejecución de la aplicación
 android: expo start --android
 
 ios: expo start --ios
