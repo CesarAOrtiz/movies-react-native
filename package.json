@@ -38,7 +38,8 @@
     "react-native-ratings": "^8.1.0",
     "react-native-screens": "^3.4.0",
     "react-native-svg": "^12.1.1",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "sharp-cli": "^1.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -47,6 +48,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "babel-jest": "^27.0.6",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "jest-expo": "^42.0.1",
     "node-fetch": "^2.6.1",
     "react-test-renderer": "^16.11.0"

@@ -8,15 +8,11 @@ export default function Cast({ actor }) {
         <View style={styles.container}>
             <Image
                 source={{ uri: actor.profilePath }}
-                style={{ width: 50, height: 50, borderRadius: 10 }}
+                style={styles.actorImage}
             />
             <View style={styles.actorInfo}>
-                <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    {actor.name}
-                </Text>
-                <Text style={{ fontSize: 16, opacity: 0.7 }}>
-                    {actor.character}
-                </Text>
+                <Text style={styles.actorName}>{actor.name}</Text>
+                <Text style={styles.actorCharacter}>{actor.character}</Text>
             </View>
         </View>
     );
@@ -39,8 +35,16 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 7.5,
     },
+    actorImage: {
+        width: 50,
+        height: 50,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
+    },
     actorInfo: {
         marginLeft: 10,
         marginTop: 4,
     },
+    actorName: { fontSize: 18, fontWeight: "bold" },
+    actorCharacter: { fontSize: 16, opacity: 0.7 },
 });

@@ -1,5 +1,11 @@
 import React from "react";
-import { FlatList, Text, View, ActivityIndicator } from "react-native";
+import {
+    FlatList,
+    Text,
+    View,
+    ActivityIndicator,
+    Platform,
+} from "react-native";
 import Movie from "../Movie/Movie";
 
 export default function SimilarList({ title, movies, navigation }) {
@@ -17,7 +23,7 @@ export default function SimilarList({ title, movies, navigation }) {
     );
 
     return (
-        <View style={{ height: 355 }}>
+        <View>
             {title && (
                 <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                     {title}
@@ -30,7 +36,7 @@ export default function SimilarList({ title, movies, navigation }) {
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id.toString()}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={Platform.OS === "web"}
                 />
             ) : (
                 <ActivityIndicator

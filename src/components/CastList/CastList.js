@@ -1,6 +1,6 @@
 import React from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
-import Cast from "./Cast/Cast";
+import { ActivityIndicator, FlatList, View, Platform } from "react-native";
+import Cast from "../Cast/Cast";
 
 export default function CastList({ cast }) {
     return (
@@ -11,7 +11,7 @@ export default function CastList({ cast }) {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <Cast actor={item} />}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={Platform.OS === "web"}
                     style={{ marginTop: 10, height: 70 }}
                 />
             ) : (

@@ -1,4 +1,5 @@
 import { APY_KEY } from "@env";
+
 export default class TMDB {
     imageURL = "https://image.tmdb.org/t/p/original";
     imageCastURL = "https://image.tmdb.org/t/p/w185";
