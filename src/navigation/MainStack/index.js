@@ -1,2 +1,2 @@
-import MainStack from ".";
+import MainStack from "./MainStack";
 export default MainStack;

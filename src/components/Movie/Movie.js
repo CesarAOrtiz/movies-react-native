@@ -9,12 +9,12 @@ export default function Movie({ movie, navigation, ...props }) {
         cardMargin = 10,
         backgroundColor = "#01192e",
         color = "white",
-        showInfo = true,
     } = props;
 
     const { title, poster, releaseDate, voteAverage, id } = movie;
 
     const releaseDateString = new Date(releaseDate).toDateString();
+
     const onPress = (e) => navigation.navigate("Details", { id, title });
 
     return (
@@ -45,11 +45,10 @@ export default function Movie({ movie, navigation, ...props }) {
                         {title}
                     </Text>
                 </TouchableOpacity>
-                {showInfo ? (
-                    <Text style={[styles.text, { color }]}>
-                        {releaseDateString}
-                    </Text>
-                ) : null}
+
+                <Text style={[styles.text, { color }]}>
+                    {releaseDateString}
+                </Text>
             </View>
         </View>
     );

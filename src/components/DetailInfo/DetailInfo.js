@@ -1,8 +1,12 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import RatingStars from "../RatingStars/RatingStars";
+import { useSession } from "../../contexts/SessionContext";
+import { useRated } from "../../contexts/RatedContext";
 
-export default function DetailInfo({ movie, rated, setRated }) {
+export default function DetailInfo({ movie }) {
+    const { id } = useSession();
+    const { rated, setRated } = useRated();
     const releaseDate = new Date(movie.releaseDate).toDateString();
 
     return (
@@ -11,6 +15,7 @@ export default function DetailInfo({ movie, rated, setRated }) {
                 {movie.title}
             </Text>
             <RatingStars
+                sessionId={id}
                 movieId={movie.id}
                 defaultRating={rated[movie.id] || 0}
                 onRate={setRated}
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        marginVertical: 10,
+        marginVertical: 5,
     },
     subtitle: { fontSize: 16 },
 });

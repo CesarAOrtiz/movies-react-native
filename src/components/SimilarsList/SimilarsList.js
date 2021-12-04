@@ -18,7 +18,6 @@ export default function SimilarList({ title, movies, navigation }) {
             navigation={navigation}
             backgroundColor="white"
             color="black"
-            showInfo={false}
         />
     );
 

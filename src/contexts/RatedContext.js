@@ -10,7 +10,7 @@ export function useRated() {
 
 export function RatedProvider({ children }) {
     const session = useSession();
-    const [rated, setRated] = useState();
+    const [rated, setRated] = useState({});
 
     useEffect(() => {
         const getRated = async (id) => {
@@ -18,7 +18,7 @@ export function RatedProvider({ children }) {
                 const rateds = await new TMBD().getRatedMovies(id);
                 setRated(rateds);
             } catch (error) {
-                setRated([]);
+                setRated((prev) => ({ ...prev, error: error.message }));
             }
         };
         if (session?.id) getRated(session?.id);

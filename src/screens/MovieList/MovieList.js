@@ -6,7 +6,7 @@ import {
     FlatList,
     ActivityIndicator,
 } from "react-native";
-import Movie from "../../components/Movie/Movie";
+import Movie from "../../components/Movie";
 import TMDB from "../../services/TMDB";
 
 export default function MovieList({ navigation, list = [], ...props }) {
@@ -78,7 +78,7 @@ export default function MovieList({ navigation, list = [], ...props }) {
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        flex: 1,
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#4e73df",

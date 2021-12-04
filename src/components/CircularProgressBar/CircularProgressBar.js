@@ -1,36 +1,30 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Text } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 
-export default function CircularProgressBar(props) {
-    const {
-        backgroundColor = "black",
-        position = "absolute",
-        top = null,
-        right = null,
-        left = null,
-        bottom = null,
-        progress = 0,
-        rotation = 0,
-        size = 30,
-        width = 3,
-        ...rest
-    } = props;
-
-    const progressPercent = useMemo(
-        () => Math.floor(progress * 10),
-        [progress]
-    );
+export default function CircularProgressBar({
+    backgroundColor = "black",
+    position = "absolute",
+    top = null,
+    right = null,
+    left = null,
+    bottom = null,
+    progress = 0,
+    rotation = 0,
+    size = 30,
+    width = 3,
+}) {
+    const progressPercent = Math.floor(progress * 10);
     const lowProgress = progress >= 5 ? "yellow" : "red";
     const highProgress = progress >= 7.5 ? "green" : lowProgress;
 
     const circularProgressStyle = {
-        position: position,
-        top: top,
-        right: right,
-        left: left,
-        bottom: bottom,
-        backgroundColor: backgroundColor,
+        position,
+        top,
+        right,
+        left,
+        bottom,
+        backgroundColor,
         borderRadius: 50,
     };
 
@@ -43,14 +37,9 @@ export default function CircularProgressBar(props) {
             fill={progressPercent}
             tintColor={highProgress}
         >
-            {(fill) => (
-                <Text
-                    style={{
-                        color: "white",
-                        fontSize: 16,
-                    }}
-                >
-                    {fill}
+            {() => (
+                <Text style={{ color: "white", fontSize: 16 }}>
+                    {Math.floor(progressPercent)}
                 </Text>
             )}
         </AnimatedCircularProgress>
