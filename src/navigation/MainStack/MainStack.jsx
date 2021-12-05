@@ -20,7 +20,7 @@ const options = {
 export default function MainStack() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Details" screenOptions={options}>
+            <Stack.Navigator initialRouteName="Home" screenOptions={options}>
                 <Stack.Screen
                     name="Home"
                     component={MovieList}
@@ -37,10 +37,10 @@ export default function MainStack() {
                     options={({ route }) => ({
                         title: route.params.title,
                     })}
-                    initialParams={{
-                        id: 635302,
-                        title: "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
-                    }}
+                    // initialParams={{
+                    //     id: 635302,
+                    //     title: "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+                    // }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
