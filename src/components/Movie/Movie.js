@@ -2,15 +2,15 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
 
-export default function Movie({ movie, navigation, ...props }) {
-    const {
-        imgWidth = 260,
-        imgHeight = 390,
-        cardMargin = 10,
-        backgroundColor = "#01192e",
-        color = "white",
-    } = props;
-
+export default function Movie({
+    movie,
+    navigation,
+    imgWidth = 260,
+    imgHeight = 390,
+    cardMargin = 10,
+    backgroundColor = "#01192e",
+    color = "white",
+}) {
     const { title, poster, releaseDate, voteAverage, id } = movie;
 
     const releaseDateString = new Date(releaseDate).toDateString();
@@ -70,12 +70,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
     },
-    info: {
-        padding: 10,
-    },
+    info: { padding: 10 },
     title: { fontWeight: "bold" },
-    text: {
-        color: "white",
-        fontSize: 16,
-    },
+    text: { color: "white", fontSize: 16 },
 });

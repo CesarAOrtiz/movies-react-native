@@ -1,10 +1,10 @@
 import React from "react";
 import { Image, View, StyleSheet, Dimensions } from "react-native";
-import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
+import CircularProgressBar from "../CircularProgressBar";
 
 export default function DetailPoster({ movie }) {
     const { backdrop, voteAverage } = movie;
-
+    console.log(movie);
     return (
         <View style={styles.imageContainer}>
             <View style={styles.imageBorder}>

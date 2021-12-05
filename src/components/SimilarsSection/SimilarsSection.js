@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TMDB from "../../services/TMDB";
-import SimilarList from "../SimilarsList/SimilarsList";
+import SimilarList from "../SimilarsList";
 
 export default function SimilarsSection({
     id,

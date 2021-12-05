@@ -6,7 +6,7 @@ import {
     ActivityIndicator,
     Platform,
 } from "react-native";
-import Movie from "../Movie/Movie";
+import Movie from "../Movie";
 
 export default function SimilarList({ title, movies, navigation }) {
     const renderItem = ({ item }) => (

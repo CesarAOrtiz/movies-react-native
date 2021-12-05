@@ -1,7 +1,7 @@
 import { APY_KEY } from "@env";
 
 export default class TMDB {
-    imageURL = "https://image.tmdb.org/t/p/original";
+    imageURL = "https://image.tmdb.org/t/p/";
     imageCastURL = "https://image.tmdb.org/t/p/w185";
     baseURL = "https://api.themoviedb.org/3/";
     apiKey = APY_KEY;
@@ -67,8 +67,8 @@ export default class TMDB {
         movie.id = json.id;
         movie.title = json.title;
         movie.overview = json.overview;
-        movie.poster = this.imageURL + json.poster_path;
-        movie.backdrop = this.imageURL + json.backdrop_path;
+        movie.poster = this.imageURL + "w500/" + json.poster_path;
+        movie.backdrop = this.imageURL + "original/" + json.backdrop_path;
         movie.releaseDate = json.release_date;
         movie.voteAverage = json.vote_average;
         movie.genres = json.genres;
@@ -79,7 +79,7 @@ export default class TMDB {
         const actor = {
             name: json.name,
             character: json.character,
-            profilePath: this.imageURL + json.profile_path,
+            profilePath: this.imageCastURL + json.profile_path,
             id: json.id,
         };
         return actor;

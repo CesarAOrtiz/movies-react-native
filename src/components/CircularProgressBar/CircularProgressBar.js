@@ -15,8 +15,8 @@ export default function CircularProgressBar({
     width = 3,
 }) {
     const progressPercent = Math.floor(progress * 10);
-    const lowProgress = progress >= 5 ? "yellow" : "red";
-    const highProgress = progress >= 7.5 ? "green" : lowProgress;
+    const progressColor =
+        progress <= 5 ? "red" : progress <= 7 ? "yellow" : "green";
 
     const circularProgressStyle = {
         position,
@@ -35,10 +35,10 @@ export default function CircularProgressBar({
             size={size}
             width={width}
             fill={progressPercent}
-            tintColor={highProgress}
+            tintColor={progressColor}
         >
             {() => (
-                <Text style={{ color: "white", fontSize: 16 }}>
+                <Text style={{ color: "white", fontSize: 13 }}>
                     {Math.floor(progressPercent)}
                 </Text>
             )}
