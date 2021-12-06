@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import TMDB from "../../services/TMDB";
-import CastList from "../CastList/CastList";
+import React, { useEffect } from "react";
+import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
+import { useResource } from "react-request-hook";
+import { getCast } from "../../services/api";
+import CastList from "../CastList";
 
-export default function CastSection({ id, providedCast = [] }) {
-    const [cast, setCast] = useState(providedCast);
+export default function CastSection({ id }) {
+  const [response, request] = useResource(getCast);
+  const { data: cast, isLoading, error, cancel } = response;
 
-    useEffect(() => {
-        async function fetchCast() {
-            try {
-                const cast = await new TMDB().getCast(id);
-                setCast(cast);
-            } catch (error) {
-                setCast([]);
-            }
-        }
-        if (providedCast.length <= 0) fetchCast();
-    }, []);
+  useEffect(() => {
+    request(id);
+    return cancel;
+  }, [id]);
 
-    return (
-        <View>
-            <Text style={styles.title}>Cast</Text>
-            <CastList cast={cast} />
-        </View>
-    );
+  return (
+    <>
+      {isLoading && (
+        <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
+      )}
+      {cast && (
+        <>
+          <Text style={styles.title}>Cast</Text>
+          <CastList cast={cast} />
+        </>
+      )}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginVertical: 10,
-    },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
 });
