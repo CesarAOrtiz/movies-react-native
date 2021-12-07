@@ -19,13 +19,8 @@ export default function MovieList({
   const [numColumns, setNumColumns] = useState(
     Math.floor(Dimensions.get("window").width / (movieWidth + movieMargin * 2))
   );
-  const [response, request] = useResource(getNowPlayingMovies);
-  const { data: movies, isLoading, error, cancel } = response;
-
-  useEffect(() => {
-    request();
-    return cancel;
-  }, []);
+  const [response] = useResource(getNowPlayingMovies, []);
+  const { data: movies, isLoading, error } = response;
 
   useEffect(() => {
     const setGrids = ({ window }) =>

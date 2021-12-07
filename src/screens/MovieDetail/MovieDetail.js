@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dimensions, View, ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useResource } from "react-request-hook";
@@ -10,13 +10,8 @@ import SimilarsSection from "../../components/SimilarsSection";
 
 export default function MovieDetail({ route, navigation }) {
   const { id } = route.params;
-  const [response, request] = useResource(getMovie);
-  const { data: movie, isLoading, error, cancel } = response;
-
-  useEffect(() => {
-    request(id);
-    return cancel;
-  }, [id]);
+  const [response] = useResource(getMovie, [id]);
+  const { data: movie, isLoading, error } = response;
 
   return (
     <ScrollView style={{ width: "100%" }}>

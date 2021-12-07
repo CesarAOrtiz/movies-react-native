@@ -1,17 +1,12 @@
-import React, { useEffect } from "react";
-import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
+import React from "react";
+import { Text, ActivityIndicator, StyleSheet } from "react-native";
 import { useResource } from "react-request-hook";
 import { getCast } from "../../services/api";
 import CastList from "../CastList";
 
 export default function CastSection({ id }) {
-  const [response, request] = useResource(getCast);
-  const { data: cast, isLoading, error, cancel } = response;
-
-  useEffect(() => {
-    request(id);
-    return cancel;
-  }, [id]);
+  const [response] = useResource(getCast, [id]);
+  const { data: cast, isLoading, error } = response;
 
   return (
     <>
