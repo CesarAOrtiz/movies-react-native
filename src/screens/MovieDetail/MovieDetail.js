@@ -1,34 +1,46 @@
 import React from "react";
-import { Dimensions, View, ActivityIndicator, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useResource } from "react-request-hook";
-import { getMovie } from "../../services/api";
 import DetailPoster from "../../components/DetailPoster";
 import DetailInfo from "../../components/DetailInfo";
-import CastSection from "../../components/CastSection";
-import SimilarsSection from "../../components/SimilarsSection";
+import CastList from "../../components/CastList";
+import SimilarsList from "../../components/SimilarsList";
+import ListSection from "../../components/ListSection";
+import { useSelector } from "react-redux";
 
-export default function MovieDetail({ route, navigation }) {
-  const { id } = route.params;
-  const [response] = useResource(getMovie, [id]);
-  const { data, isLoading, error } = response;
+export default function MovieDetail({ navigation }) {
+  const { cast, similars, ...movie } = useSelector((state) => state.movie);
+
+  const movieReady = Object.keys(movie).length > 0;
 
   return (
     <ScrollView style={{ width: "100%" }}>
-      {isLoading && (
+      {!movieReady && (
         <ActivityIndicator
           size={40}
           color="#4e73df"
           style={{ height: Dimensions.get("window").height - 64 }}
         />
       )}
-      {data && (
+      {movieReady && (
         <View style={styles.content}>
-          <DetailPoster movie={data} />
+          <DetailPoster data={movie} />
           <View style={{ margin: 20 }}>
-            <DetailInfo movie={data} />
-            <CastSection id={id} />
-            <SimilarsSection id={id} navigation={navigation} />
+            <DetailInfo data={movie} />
+            <Text style={styles.title}>Cast</Text>
+            <ListSection data={cast} ListComponent={CastList} />
+            <Text style={styles.title}>Similars</Text>
+            <ListSection
+              data={similars}
+              navigation={navigation}
+              ListComponent={SimilarsList}
+            />
           </View>
         </View>
       )}
@@ -41,5 +53,10 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 1024,
     margin: "auto",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
 });

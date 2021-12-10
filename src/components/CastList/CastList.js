@@ -10,7 +10,6 @@ export default function CastList({ data }) {
       renderItem={({ item }) => <Cast actor={item} />}
       horizontal={true}
       showsHorizontalScrollIndicator={Platform.OS === "web"}
-      style={{ marginTop: 10, height: 70 }}
     />
   );
 }

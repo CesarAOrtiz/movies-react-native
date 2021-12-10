@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import movieReducer from "./reducers/movieReducer";
+import movieReducer from "./reducers/movie";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&

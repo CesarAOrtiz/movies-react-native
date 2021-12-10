@@ -4,27 +4,30 @@ import RatingStars from "../RatingStars/RatingStars";
 import { useSession } from "../../contexts/SessionContext";
 import { useRated } from "../../contexts/RatedContext";
 
-export default function DetailInfo({ movie }) {
-  const { id } = useSession();
+export default function DetailInfo({ data }) {
+  const { id: sesionId } = useSession();
   const { rated, fetchRated } = useRated();
-  const releaseDate = new Date(movie.releaseDate).toDateString();
+
+  const { id, title, releaseDate, overview, genres } = data;
 
   return (
     <View>
-      <Text style={[styles.title, { color: "#4e73df" }]}>{movie.title}</Text>
+      <Text style={[styles.title, { color: "#4e73df" }]}>{title}</Text>
       <RatingStars
-        sessionId={id}
-        movieId={movie.id}
-        defaultRating={rated[movie.id] || 0}
+        sessionId={sesionId}
+        movieId={id}
+        defaultRating={rated[id] || 0}
         onRate={fetchRated}
       />
       <Text style={styles.title}>Overview</Text>
-      <Text style={styles.subtitle}>{movie.overview}</Text>
+      <Text style={styles.subtitle}>{overview}</Text>
       <Text style={styles.title}>Release date</Text>
-      <Text style={styles.subtitle}>{releaseDate}</Text>
+      <Text style={styles.subtitle}>
+        {new Date(releaseDate).toDateString()}
+      </Text>
       <Text style={styles.title}>Genres</Text>
       <Text style={styles.subtitle}>
-        {movie.genres.map((g) => g.name).join(", ")}
+        {genres?.map((g) => g.name).join(", ")}
       </Text>
     </View>
   );

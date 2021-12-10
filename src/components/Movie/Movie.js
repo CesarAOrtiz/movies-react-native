@@ -2,7 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
-import { getMovie } from "../../store/actions/movieActions";
+import {
+  fetchMovie,
+  fetchCast,
+  fetchSimilars,
+} from "../../store/actions/movie";
 
 export default function Movie({
   movie,
@@ -20,7 +24,9 @@ export default function Movie({
   const releaseDateString = new Date(releaseDate).toDateString();
 
   const onPress = (e) => {
-    dispatch(getMovie(movie));
+    dispatch(fetchMovie(id));
+    dispatch(fetchCast(id));
+    dispatch(fetchSimilars(id));
     navigation.navigate("Details", { id, title });
   };
 
@@ -64,10 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#01192e",
     borderRadius: 15,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
+    shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.25,
     shadowRadius: 7.5,
   },
