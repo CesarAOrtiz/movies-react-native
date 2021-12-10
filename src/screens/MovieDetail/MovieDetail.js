@@ -11,7 +11,7 @@ import SimilarsSection from "../../components/SimilarsSection";
 export default function MovieDetail({ route, navigation }) {
   const { id } = route.params;
   const [response] = useResource(getMovie, [id]);
-  const { data: movie, isLoading, error } = response;
+  const { data, isLoading, error } = response;
 
   return (
     <ScrollView style={{ width: "100%" }}>
@@ -22,11 +22,11 @@ export default function MovieDetail({ route, navigation }) {
           style={{ height: Dimensions.get("window").height - 64 }}
         />
       )}
-      {movie && (
+      {data && (
         <View style={styles.content}>
-          <DetailPoster movie={movie} />
+          <DetailPoster movie={data} />
           <View style={{ margin: 20 }}>
-            <DetailInfo movie={movie} />
+            <DetailInfo movie={data} />
             <CastSection id={id} />
             <SimilarsSection id={id} navigation={navigation} />
           </View>

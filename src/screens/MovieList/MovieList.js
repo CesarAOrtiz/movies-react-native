@@ -7,8 +7,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useResource } from "react-request-hook";
-import Movie from "../../components/Movie";
 import { getNowPlayingMovies } from "../../services/api";
+import Movie from "../../components/Movie";
 
 export default function MovieList({
   navigation,

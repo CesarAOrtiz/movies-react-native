@@ -6,17 +6,20 @@ import CastList from "../CastList";
 
 export default function CastSection({ id }) {
   const [response] = useResource(getCast, [id]);
-  const { data: cast, isLoading, error } = response;
+  const { data, isLoading, error } = response;
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
+    );
+  }
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
-      )}
-      {cast && (
+      {data && (
         <>
           <Text style={styles.title}>Cast</Text>
-          <CastList cast={cast} />
+          <CastList data={data} />
         </>
       )}
     </>

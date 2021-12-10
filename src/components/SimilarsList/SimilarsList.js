@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, Platform } from "react-native";
 import Movie from "../Movie";
 
-export default function SimilarList({ movies, navigation }) {
+export default function SimilarList({ data, navigation }) {
   const renderItem = ({ item }) => (
     <Movie
       movie={item}
@@ -17,7 +17,7 @@ export default function SimilarList({ movies, navigation }) {
 
   return (
     <FlatList
-      data={movies}
+      data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
       horizontal={true}

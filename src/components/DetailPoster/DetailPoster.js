@@ -1,10 +1,11 @@
 import React from "react";
 import { Image, View, StyleSheet, Dimensions } from "react-native";
+import { useSelector } from "react-redux";
 import CircularProgressBar from "../CircularProgressBar";
 
 export default function DetailPoster({ movie }) {
-  const { backdrop, voteAverage } = movie;
-
+  const { backdrop, voteAverage } = useSelector((state) => state.movie);
+  // const { backdrop, voteAverage } = movie;
   return (
     <View style={styles.imageContainer}>
       <View style={styles.imageBorder}>

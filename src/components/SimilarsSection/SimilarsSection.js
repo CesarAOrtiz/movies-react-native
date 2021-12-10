@@ -6,17 +6,20 @@ import SimilarList from "../SimilarsList";
 
 export default function SimilarsSection({ id, navigation }) {
   const [response] = useResource(getSimilars, [id]);
-  const { data: similars, isLoading, error } = response;
+  const { data, isLoading, error } = response;
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
+    );
+  }
 
   return (
     <>
-      {isLoading && (
-        <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
-      )}
-      {similars && (
+      {data && (
         <>
           <Text style={styles.title}>Similars</Text>
-          <SimilarList movies={similars} navigation={navigation} />
+          <SimilarList data={data} navigation={navigation} />
         </>
       )}
     </>

@@ -1,7 +1,7 @@
 import { request } from "react-request-hook";
 import { IMG_URL } from "@env";
 
-function getMovieData(json) {
+export function getMovieData(json) {
   const movie = {};
   movie.id = json.id;
   movie.title = json.title;
@@ -14,7 +14,7 @@ function getMovieData(json) {
   return movie;
 }
 
-function getActor(json) {
+export function getActor(json) {
   const actor = {
     name: json.name,
     character: json.character,
