@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AirbnbRating } from "react-native-ratings";
-import { useResource } from "react-request-hook";
-import { rate } from "../../services/api";
 
 const reviews = [
   "Terrible",
@@ -16,24 +14,10 @@ const reviews = [
   "Unbelievable",
 ];
 
-export default function RatingStars({
-  sessionId,
-  movieId,
-  onRate,
-  defaultRating = 0,
-}) {
-  const [response, request] = useResource(rate);
-  const { data, error } = response;
-
+export default function RatingStars({ movieId, rate, defaultRating = 0 }) {
   async function ratingCompleted(rating) {
-    request(sessionId, movieId, rating);
+    rate(movieId, rating);
   }
-
-  useEffect(() => {
-    if (data?.success && onRate) {
-      onRate();
-    }
-  }, [data]);
 
   return (
     <AirbnbRating

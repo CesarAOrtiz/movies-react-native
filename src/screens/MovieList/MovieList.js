@@ -6,32 +6,44 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import { useResource } from "react-request-hook";
-import { getNowPlayingMovies } from "../../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../store/actions/movies";
 import Movie from "../../components/Movie";
-
+let n = 0;
 export default function MovieList({
   navigation,
   movieWidth = 250,
   movieHeigth = 375,
   movieMargin = 10,
 }) {
-  const [numColumns, setNumColumns] = useState(
-    Math.floor(Dimensions.get("window").width / (movieWidth + movieMargin * 2))
-  );
-  const [response] = useResource(getNowPlayingMovies, []);
-  const { data: movies, isLoading, error } = response;
+  const dispatch = useDispatch();
+  const {
+    data: movies,
+    isLoading,
+    error,
+  } = useSelector((state) => state.movies);
+
+  const getGrids = () =>
+    Math.floor(Dimensions.get("window").width / (movieWidth + movieMargin * 2));
+
+  const [numColumns, setNumColumns] = useState(getGrids());
 
   useEffect(() => {
-    const setGrids = ({ window }) =>
-      setNumColumns(
-        Math.floor(
-          Dimensions.get("window").width / (movieWidth + movieMargin * 2)
-        )
-      );
+    dispatch(fetchMovies());
+  }, []);
 
-    Dimensions.addEventListener("change", setGrids);
-    return () => Dimensions.removeEventListener("change", setGrids);
+  // useEffect(() => {
+  //   if (movies.length > 0 && n < 3) {
+  //     dispatch(fetchMovies());
+  //     n += 1;
+  //   }
+  // }, [movies]);
+
+  useEffect(() => {
+    const setGrids = () => setNumColumns(getGrids());
+
+    const suscription = Dimensions.addEventListener("change", setGrids);
+    return () => suscription?.remove();
   }, []);
 
   const renderItem = ({ item }) => (

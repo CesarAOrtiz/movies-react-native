@@ -1,14 +1,15 @@
-import { axiosInstance as axios } from "../../contexts/RequestsHookContext";
-import { getMovieData, getActor } from "../../services/api";
+import { axiosInstance as axios } from "../../services/axiosInstance";
+import { getMovieData } from "../../services/transformData";
 
 export const getMovie = (movie) => ({ type: "GET_MOVIE", payload: movie });
-export const getCast = (cast) => ({ type: "GET_CAST", payload: cast });
-export const getSimilars = (similars) => ({
-  type: "GET_SIMILARS",
-  payload: similars,
+const setMovieLoading = (isLoading) => ({
+  type: "SET_MOVIE_LOADING",
+  payload: isLoading,
 });
+const setMovieError = (error) => ({ type: "SET_MOVIE_ERROR", payload: error });
 
 export const fetchMovie = (id) => async (dispatch) => {
+  dispatch(setMovieLoading(true));
   try {
     const { data } = await axios({
       url: `/movie/${id}`,
@@ -22,48 +23,9 @@ export const fetchMovie = (id) => async (dispatch) => {
       ],
     });
     dispatch(getMovie(data));
+    dispatch(setMovieError(null));
   } catch (error) {
-    dispatch(getMovie({ error: error.message }));
+    dispatch(setMovieError(error.message));
   }
-};
-
-export const fetchCast = (id) => async (dispatch) => {
-  try {
-    const { data } = await axios({
-      url: `movie/${id}/credits`,
-      method: "GET",
-      transformResponse: [
-        (data) => {
-          const json = JSON.parse(data);
-          const characters = json.cast.filter(
-            (actor) => actor.character && actor.profile_path
-          );
-          const results = characters.map(getActor);
-          return results;
-        },
-      ],
-    });
-    dispatch(getCast(data));
-  } catch (error) {
-    dispatch(getCast({ error: error.message }));
-  }
-};
-
-export const fetchSimilars = (id) => async (dispatch) => {
-  try {
-    const { data } = await axios({
-      url: `movie/${id}/similar`,
-      method: "GET",
-      transformResponse: [
-        (data) => {
-          const json = JSON.parse(data);
-          const results = json.results.map(getMovieData);
-          return results;
-        },
-      ],
-    });
-    dispatch(getSimilars(data));
-  } catch (error) {
-    dispatch(getSimilars({ error: error.message }));
-  }
+  dispatch(setMovieLoading(false));
 };

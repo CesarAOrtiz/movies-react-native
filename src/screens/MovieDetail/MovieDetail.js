@@ -14,30 +14,28 @@ import SimilarsList from "../../components/SimilarsList";
 import ListSection from "../../components/ListSection";
 import { useSelector } from "react-redux";
 
-export default function MovieDetail({ navigation }) {
-  const { cast, similars, ...movie } = useSelector((state) => state.movie);
-
-  const movieReady = Object.keys(movie).length > 0;
+export default function MovieDetail({ route, navigation }) {
+  const { data, isLoading, error } = useSelector((state) => state.movie);
 
   return (
     <ScrollView style={{ width: "100%" }}>
-      {!movieReady && (
+      {isLoading && (
         <ActivityIndicator
           size={40}
           color="#4e73df"
           style={{ height: Dimensions.get("window").height - 64 }}
         />
       )}
-      {movieReady && (
+      {!isLoading && (
         <View style={styles.content}>
-          <DetailPoster data={movie} />
+          <DetailPoster data={data} />
           <View style={{ margin: 20 }}>
-            <DetailInfo data={movie} />
+            <DetailInfo data={data} />
             <Text style={styles.title}>Cast</Text>
-            <ListSection data={cast} ListComponent={CastList} />
+            <ListSection ListComponent={CastList} name="cast" />
             <Text style={styles.title}>Similars</Text>
             <ListSection
-              data={similars}
+              name="similars"
               navigation={navigation}
               ListComponent={SimilarsList}
             />

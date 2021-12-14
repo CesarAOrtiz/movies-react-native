@@ -2,11 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import CircularProgressBar from "../CircularProgressBar/CircularProgressBar";
-import {
-  fetchMovie,
-  fetchCast,
-  fetchSimilars,
-} from "../../store/actions/movie";
+import { fetchMovie } from "../../store/actions/movie";
+import { fetchCast } from "../../store/actions/cast";
+import { fetchSimilars } from "../../store/actions/similars";
 
 export default function Movie({
   movie,

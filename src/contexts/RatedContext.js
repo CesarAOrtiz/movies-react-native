@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { useResource } from "react-request-hook";
-import { useSession } from "./SessionContext";
-import { getRatedMovies } from "../services/api";
+import React, { useContext, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchGuestSession } from "../store/actions/session";
+import { fetchRatedMovies, postRateMovie } from "../store/actions/rated";
 
 const RatedContext = React.createContext();
 
@@ -10,13 +10,24 @@ export function useRated() {
 }
 
 export function RatedProvider({ children }) {
-  const session = useSession();
-  const [response, request] = useResource(getRatedMovies, [session?.id]);
-  const { data, error } = response;
+  const dispatch = useDispatch();
+  const { session, rated } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchGuestSession());
+  }, []);
+
+  useEffect(() => {
+    session.id && dispatch(fetchRatedMovies(session.id));
+  }, [session]);
 
   return (
     <RatedContext.Provider
-      value={{ rated: data, fetchRated: () => request(session?.id) }}
+      value={{
+        rated,
+        rate: (movieId, rating) =>
+          dispatch(postRateMovie(session.id, movieId, rating)),
+      }}
     >
       {children}
     </RatedContext.Provider>
