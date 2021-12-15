@@ -7,7 +7,9 @@ const axiosInstance = axios.create({
   transformResponse: [
     (data) => {
       const json = JSON.parse(data);
+      console.log(json);
       if (json.errors) throw json;
+      if (json.success === false) throw { errors: json.status_message };
       return json;
     },
   ],

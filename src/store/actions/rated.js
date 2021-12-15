@@ -17,10 +17,10 @@ export const fetchRatedMovies = (guest_session) => {
         url: `guest_session/${guest_session}/rated/movies`,
         method: "GET",
         transformResponse: [
+          ...axios.defaults.transformResponse,
           (data) => {
-            const json = JSON.parse(data);
             const results = {};
-            json.results.forEach((movie) => {
+            data.results.forEach((movie) => {
               results[movie.id] = movie.rating;
             });
             return results;
@@ -29,7 +29,7 @@ export const fetchRatedMovies = (guest_session) => {
       });
       dispatch(getRatedMovies(data));
     } catch (error) {
-      dispatch(getRatedMovies({ error: error.message }));
+      dispatch(getRatedMovies(error.errors));
     }
   };
 };
@@ -41,10 +41,14 @@ export const postRateMovie = (sessionId, movieId, value) => {
         url: `movie/${movieId}/rating?guest_session_id=${sessionId}`,
         method: "POST",
         data: { value },
+        transformResponse: [
+          ...axios.defaults.transformResponse,
+          (data) => data,
+        ],
       });
       dispatch(rateMovie(movieId, value));
     } catch (error) {
-      dispatch(rateMovie({ error: error.message }));
+      dispatch(rateMovie(error.errors));
     }
   };
 };

@@ -8,6 +8,8 @@ export default function DetailInfo({ data }) {
 
   const { id, title, releaseDate, overview, genres } = data;
 
+  const date = new Date(releaseDate).toDateString();
+
   return (
     <View>
       <Text style={[styles.title, { color: "#4e73df" }]}>{title}</Text>
@@ -16,7 +18,7 @@ export default function DetailInfo({ data }) {
       <Text style={styles.subtitle}>{overview}</Text>
       <Text style={styles.title}>Release date</Text>
       <Text style={styles.subtitle}>
-        {new Date(releaseDate).toDateString()}
+        {date === "Invalid Date" ? "Unknown" : date}
       </Text>
       <Text style={styles.title}>Genres</Text>
       <Text style={styles.subtitle}>

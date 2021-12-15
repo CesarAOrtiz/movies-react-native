@@ -15,17 +15,14 @@ export const fetchMovie = (id) => async (dispatch) => {
       url: `/movie/${id}`,
       method: "GET",
       transformResponse: [
-        (data) => {
-          const json = JSON.parse(data);
-          const results = getMovieData(json);
-          return results;
-        },
+        ...axios.defaults.transformResponse,
+        (data) => getMovieData(data),
       ],
     });
     dispatch(getMovie(data));
     dispatch(setMovieError(null));
   } catch (error) {
-    dispatch(setMovieError(error.message));
+    dispatch(setMovieError(error.errors));
   }
   dispatch(setMovieLoading(false));
 };

@@ -20,10 +20,7 @@ export const fetchMovies = (page) => async (dispatch, getState) => {
       method: "GET",
       transformResponse: [
         ...axios.defaults.transformResponse,
-        (data) => {
-          const results = data.results.map(getMovieData);
-          return results;
-        },
+        (data) => data.results.map(getMovieData),
       ],
     });
     dispatch(getMovies(data));

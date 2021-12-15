@@ -15,9 +15,9 @@ export const fetchCast = (id) => async (dispatch) => {
       url: `movie/${id}/credits`,
       method: "GET",
       transformResponse: [
+        ...axios.defaults.transformResponse,
         (data) => {
-          const json = JSON.parse(data);
-          const characters = json.cast.filter(
+          const characters = data.cast.filter(
             (actor) => actor.character && actor.profile_path
           );
           const results = characters.map(getActor);
@@ -28,7 +28,7 @@ export const fetchCast = (id) => async (dispatch) => {
     dispatch(getCast(data));
     dispatch(setCastError(null));
   } catch (error) {
-    dispatch(setCastError(error.message));
+    dispatch(setCastError(error.errors));
   }
   dispatch(setCastLoading(false));
 };

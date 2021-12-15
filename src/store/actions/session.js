@@ -17,16 +17,13 @@ export const fetchGuestSession = () => {
         url: `authentication/guest_session/new`,
         method: "GET",
         transformResponse: [
-          (data) => {
-            const json = JSON.parse(data);
-            const result = { id: json.guest_session_id };
-            return result;
-          },
+          ...axios.defaults.transformResponse,
+          (data) => ({ id: data.guest_session_id }),
         ],
       });
       dispatch(getGuestSession(data));
     } catch (error) {
-      dispatch(getGuestSession({ error: error.message }));
+      dispatch(getGuestSession(error.errors));
     }
   };
 };

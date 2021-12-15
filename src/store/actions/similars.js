@@ -21,17 +21,14 @@ export const fetchSimilars = (id) => async (dispatch) => {
       url: `movie/${id}/similar`,
       method: "GET",
       transformResponse: [
-        (data) => {
-          const json = JSON.parse(data);
-          const results = json.results.map(getMovieData);
-          return results;
-        },
+        ...axios.defaults.transformResponse,
+        (data) => data.results.map(getMovieData),
       ],
     });
     dispatch(getSimilars(data));
     dispatch(setSimilarError(null));
   } catch (error) {
-    dispatch(setSimilarError(error.message));
+    dispatch(setSimilarError(error.errors));
   }
   dispatch(setSimilarsLoading(false));
 };
