@@ -37,10 +37,6 @@ export default function MainStack() {
                     options={({ route }) => ({
                         title: route.params.title,
                     })}
-                    // initialParams={{
-                    //     id: 635302,
-                    //     title: "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
-                    // }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
